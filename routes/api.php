@@ -33,6 +33,7 @@ Route::group([
     'middleware' => ['auth:sanctum']
 ], function () {
         Route::get('/', 'TodoController@index');
+        Route::get('/{id}', 'TodoController@show');
         Route::post('add', 'TodoController@add');
         Route::post('update/{id}', 'TodoController@update');
         Route::delete('delete/{id}', 'TodoController@delete');

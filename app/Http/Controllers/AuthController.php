@@ -25,9 +25,13 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->save();
-        
-        return response()->json(['message' => 'Register success'], 200);
+        $save = $user->save();
+
+        if ($save) {
+            return response()->json(['message' => 'Register success.'], 200);
+        } else {
+            return response()->json(['message' => 'Register failed.'], 500);
+        }
     }
 
     //

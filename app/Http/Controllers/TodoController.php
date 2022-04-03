@@ -12,7 +12,22 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::where('userId', Auth::id())->get();
-        return response()->json($todos);
+        if (!is_null($todos) && !$todos->empty()) {
+            return response()->json($todos, 200);
+        } else {
+            return response()->json(['message' => 'No data found'], 404);
+        }
+    }
+
+    //
+    public function show($id)
+    {
+        $todo = Todo::where('userId', Auth::id())->find($id);
+        if (!is_null($todo) && !$todo->empty()) {
+            return response()->json($todo, 200);
+        } else {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
     }
 
     //
@@ -29,11 +44,13 @@ class TodoController extends Controller
             'userId' => Auth::id(),
         ]);
 
-        $todo->save();
+        $save = $todo->save();
 
-        return response()->json([
-            'message' => 'Data added',
-        ], 200);
+        if ($save) {
+            return response()->json(['message' => 'Data added successfully.'], 200);
+        } else {
+            return response()->json(['message' => 'Data failed to add.'], 500);
+        }
     }
 
     //
@@ -55,11 +72,17 @@ class TodoController extends Controller
         $todo->title = $request->title;
         $todo->description = $request->description;
 
-        $todo->save();
+        if ($todo->userId == Auth::id()) {
+            $save = $todo->save();
 
-        return response()->json([
-            'message' => 'Data updated succesfully',
-        ], 200);
+            if ($save) {
+                return response()->json(['message' => 'Data updated successfully.'], 200);
+            } else {
+                return response()->json(['message' => 'Data failed to update.'], 500);
+            }
+        } else {
+            return response()->json(['message' => 'You are not authorized to update this data.'], 401);
+        }
     }
 
     //
@@ -73,11 +96,17 @@ class TodoController extends Controller
             ], 404);
         }
 
-        $todo->delete();
+        if($todo->userId == Auth::id()){
+            $delete = $todo->delete();
 
-        return response()->json([
-            'message' => 'Data deleted succesfully',
-        ], 200);
+            if ($delete) {
+                return response()->json(['message' => 'Data deleted successfully.'], 200);
+            } else {
+                return response()->json(['message' => 'Data failed to delete.'], 500);
+            }
+        } else {
+            return response()->json(['message' => 'You are not authorized to delete this data.'], 401);
+        }
     }
 
 }
