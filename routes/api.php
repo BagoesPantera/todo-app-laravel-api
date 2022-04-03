@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 $router->get('/', function(){
-    return response()->json(['message' => 'Connected to server'], 200);
+    return response()->json(['message' => 'Connected to server'],200);
 });
 
 Route::group([
@@ -42,3 +42,4 @@ Route::group([
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
