@@ -11,7 +11,7 @@ class TodoController extends Controller
     //
     public function index()
     {
-        $todos = Todo::where('userId', Auth::id())->get();
+        $todos = Todo::where('userid', Auth::id())->get();
         return response()->json($todos);
     }
 
@@ -26,7 +26,7 @@ class TodoController extends Controller
         $todo = new Todo([
             'title' => $request->title,
             'description' => $request->description,
-            'userId' => Auth::user()->id,
+            'userid' => Auth::user()->id,
         ]);
 
         $todo->save();
