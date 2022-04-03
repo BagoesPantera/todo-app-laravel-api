@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 $router->get('/', function(){
-    return response()->json("Connected");
+    return response()->json(['message' => 'Connected to server'], 200);
 });
 
 Route::group([
