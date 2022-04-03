@@ -26,7 +26,7 @@ class TodoController extends Controller
         $todo = new Todo([
             'title' => $request->title,
             'description' => $request->description,
-            'userid' => Auth::user()->id,
+            'userId' => Auth::user()->id,
         ]);
 
         $todo->save();
