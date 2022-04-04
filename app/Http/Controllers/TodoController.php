@@ -12,10 +12,10 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::where('userId', Auth::id())->get();
-        if (!is_null($todos) && !$todos->empty()) {
+        if (!$todos->isEmpty() && !is_null($todos)) {
             return response()->json($todos, 200);
         } else {
-            return response()->json(['message' => 'No data found'], 404);
+            return response()->json(['message' => 'No data found'], 200);
         }
     }
 
@@ -26,7 +26,7 @@ class TodoController extends Controller
         if (!is_null($todo) && !$todo->empty()) {
             return response()->json($todo, 200);
         } else {
-            return response()->json(['message' => 'Data not found'], 404);
+            return response()->json(['message' => 'Data not found'], 200);
         }
     }
 
@@ -49,7 +49,7 @@ class TodoController extends Controller
         if ($save) {
             return response()->json(['message' => 'Data added successfully.'], 200);
         } else {
-            return response()->json(['message' => 'Data failed to add.'], 500);
+            return response()->json(['message' => 'Data failed to add.'], 200);
         }
     }
 
@@ -78,10 +78,10 @@ class TodoController extends Controller
             if ($save) {
                 return response()->json(['message' => 'Data updated successfully.'], 200);
             } else {
-                return response()->json(['message' => 'Data failed to update.'], 500);
+                return response()->json(['message' => 'Data failed to update.'], 200);
             }
         } else {
-            return response()->json(['message' => 'You are not authorized to update this data.'], 401);
+            return response()->json(['message' => 'You are not authorized to update this data.'], 200);
         }
     }
 
@@ -102,10 +102,10 @@ class TodoController extends Controller
             if ($delete) {
                 return response()->json(['message' => 'Data deleted successfully.'], 200);
             } else {
-                return response()->json(['message' => 'Data failed to delete.'], 500);
+                return response()->json(['message' => 'Data failed to delete.'], 200);
             }
         } else {
-            return response()->json(['message' => 'You are not authorized to delete this data.'], 401);
+            return response()->json(['message' => 'You are not authorized to delete this data.'], 200);
         }
     }
 

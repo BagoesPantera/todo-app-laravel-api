@@ -30,7 +30,7 @@ class AuthController extends Controller
         if ($save) {
             return response()->json(['message' => 'Register success.'], 200);
         } else {
-            return response()->json(['message' => 'Register failed.'], 500);
+            return response()->json(['message' => 'Register failed.'], 200);
         }
     }
 
@@ -45,7 +45,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if(!Auth::attempt($credentials)){
-            return response()->json(['message' => 'Email or Password wrong'], 401);
+            return response()->json(['message' => 'Email or Password wrong'], 200);
         }
 
         $user = $request->user();
