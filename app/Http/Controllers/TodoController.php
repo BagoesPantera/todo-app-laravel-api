@@ -64,9 +64,7 @@ class TodoController extends Controller
         $todo = Todo::find($id);
 
         if(!$todo){
-            return response()->json([
-                'message' => 'Todo not found',
-            ], 404);
+            return response()->json(['message' => 'Todo not found',], 200);
         }
 
         $todo->title = $request->title;
@@ -91,9 +89,7 @@ class TodoController extends Controller
         $todo = Todo::find($id);
 
         if(!$todo){
-            return response()->json([
-                'message' => 'Todo not found',
-            ], 404);
+            return response()->json(['message' => 'Todo not found',], 200);
         }
 
         if($todo->userId == Auth::id()){
