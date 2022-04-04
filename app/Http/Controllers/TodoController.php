@@ -12,7 +12,7 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::where('userId', Auth::id())->get();
-        if (!$todos->isEmpty() && !is_null($todos)) {
+        if (!is_null($todos)) {
             return response()->json($todos, 200);
         } else {
             return response()->json(['message' => 'No data found'], 200);
@@ -23,7 +23,7 @@ class TodoController extends Controller
     public function show($id)
     {
         $todo = Todo::where('userId', Auth::id())->find($id);
-        if (!is_null($todo) && !$todo->empty()) {
+        if (!is_null($todo)) {
             return response()->json($todo, 200);
         } else {
             return response()->json(['message' => 'Data not found'], 200);
@@ -64,7 +64,7 @@ class TodoController extends Controller
         $todo = Todo::find($id);
 
         if(!$todo){
-            return response()->json(['message' => 'Todo not found',], 200);
+            return response()->json(['message' => 'Data not found',], 200);
         }
 
         $todo->title = $request->title;
@@ -89,7 +89,7 @@ class TodoController extends Controller
         $todo = Todo::find($id);
 
         if(!$todo){
-            return response()->json(['message' => 'Todo not found',], 200);
+            return response()->json(['message' => 'Data not found',], 200);
         }
 
         if($todo->userId == Auth::id()){
