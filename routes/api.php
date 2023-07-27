@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,24 @@ $router->get('/', function(){
 Route::prefix('auth')->controller(AuthController::class)->group(function (){
     Route::post('register', 'register');
     Route::post('login', 'login');
+});
+
+Route::group([
+    'namespace' => 'App\Http\Controllers',
+    'prefix' => 'todo',
+    'middleware' => ['auth:sanctum']
+], function () {
+        
+    }
+);
+
+// todo group
+Route::prefix('todo')->controller(TodoController::class)->middleware('auth:sanctum')->group(function (){
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('add', 'add');
+    Route::post('update/{id}', 'update');
+    Route::delete('delete/{id}', 'delete');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
